@@ -72,7 +72,7 @@ function setup() {
 
   resetButton = createButton("reset");
   resetButton.size(60, 20)
-  resetButton.mousePressed(init);
+  resetButton.mousePressed(init.bind(null, xMargin, yMargin));
 
   startButton.position(cnv.width/2 - startButton.width/2 - resetButton.width/2, 10);
   resetButton.position(cnv.width/2 - startButton.width/2 + resetButton.width/2, 10);
