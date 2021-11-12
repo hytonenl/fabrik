@@ -5,9 +5,12 @@ const RADIUS = 9;
 const GRAVITY = 0.15;
 const COLORS = {};
 
+let NUM_ITERATIONS = 4;
+
 let cnv;
 let startButton;
 let resetButton;
+let iterationSlider;
 
 let simulate = false;
 
@@ -52,6 +55,8 @@ function init(xMargin, yMargin) {
     if (idx - COLS >= 0) { newRods.push([points[idx - COLS], points[idx]])}
   }
   rods = newRods.map(([p1, p2]) => new Rod(p1, p2, SPACE))
+  // Shuffle rods to avoid continuously evaluating adjacent rods, which may cause unwanted side-effects
+  rods = shuffle(rods);
 }
 
 function setup() {
@@ -77,16 +82,24 @@ function setup() {
   startButton.position(cnv.width/2 - startButton.width/2 - resetButton.width/2, 10);
   resetButton.position(cnv.width/2 - startButton.width/2 + resetButton.width/2, 10);
 
+  // Init sliders
+  iterationSlider = createSlider(1, 20, NUM_ITERATIONS, 1);
+  iterationSlider.position(cnv.width * 3 / 4 - iterationSlider.width/2, 10);
+
   init(xMargin, yMargin);
 }
 
 function draw() {
   background(220);
 
-  stroke(0, 0, 0)
-  fill('white')
-  text(`rods ${rods.length}`, 5, 15)
-  text(`points ${points.length}`, 5, 30)
+  textSize(14);
+  stroke(0, 0, 0);
+  fill('white');
+  text(`rods ${rods.length}`, 5, 15);
+  text(`points ${points.length}`, 5, 30);
+
+  NUM_ITERATIONS = iterationSlider.value();
+  text(`iterations: ${NUM_ITERATIONS}`, iterationSlider.x + iterationSlider.width/4, iterationSlider.y + 30);
 
   if (mouseIsPressed) {
     cursor(CROSS);

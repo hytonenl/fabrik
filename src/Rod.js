@@ -15,16 +15,18 @@ class Rod {
   }
 
   move() {
-    const center = this.getCenterPoint();
-    const direction = this.getDirection();
+    for (let i = 0; i < NUM_ITERATIONS; i++) {
+      const center = this.getCenterPoint();
+      const direction = this.getDirection();
 
-    if (!this.p1.isStatic) {
-      this.p1.v.x = center.x + direction.x * this.length/2;
-      this.p1.v.y = center.y + direction.y * this.length/2;
-    }
-    if (!this.p2.isStatic) {
-      this.p2.v.x = center.x - direction.x * this.length/2;
-      this.p2.v.y = center.y - direction.y * this.length/2;
+      if (!this.p1.isStatic) {
+        this.p1.v.x = center.x + direction.x * this.length/2;
+        this.p1.v.y = center.y + direction.y * this.length/2;
+      }
+      if (!this.p2.isStatic) {
+        this.p2.v.x = center.x - direction.x * this.length/2;
+        this.p2.v.y = center.y - direction.y * this.length/2;
+      }
     }
   }
 
